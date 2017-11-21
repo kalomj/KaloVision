@@ -33,7 +33,6 @@
             this.stopButton = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.featureListBox = new System.Windows.Forms.ListBox();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.trackBar3 = new System.Windows.Forms.TrackBar();
             this.trackBar4 = new System.Windows.Forms.TrackBar();
@@ -61,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.videoPictureBox.Location = new System.Drawing.Point(13, 113);
             this.videoPictureBox.Name = "videoPictureBox";
-            this.videoPictureBox.Size = new System.Drawing.Size(730, 662);
+            this.videoPictureBox.Size = new System.Drawing.Size(701, 662);
             this.videoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.videoPictureBox.TabIndex = 1;
             this.videoPictureBox.TabStop = false;
@@ -96,16 +95,6 @@
             this.trackBar1.TabIndex = 4;
             this.trackBar1.Value = 50;
             // 
-            // featureListBox
-            // 
-            this.featureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.featureListBox.FormattingEnabled = true;
-            this.featureListBox.Location = new System.Drawing.Point(749, 108);
-            this.featureListBox.Name = "featureListBox";
-            this.featureListBox.Size = new System.Drawing.Size(218, 667);
-            this.featureListBox.TabIndex = 5;
-            // 
             // trackBar2
             // 
             this.trackBar2.Location = new System.Drawing.Point(189, 62);
@@ -138,11 +127,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 802);
+            this.ClientSize = new System.Drawing.Size(1215, 802);
             this.Controls.Add(this.trackBar4);
             this.Controls.Add(this.trackBar3);
             this.Controls.Add(this.trackBar2);
-            this.Controls.Add(this.featureListBox);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.stopButton);
@@ -167,7 +155,6 @@
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.ListBox featureListBox;
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.TrackBar trackBar3;
         private System.Windows.Forms.TrackBar trackBar4;

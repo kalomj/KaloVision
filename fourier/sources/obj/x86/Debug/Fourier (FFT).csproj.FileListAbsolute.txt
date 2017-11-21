@@ -1,0 +1,36 @@
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.dll.config
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Fourier (FFT).exe.config
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Fourier (FFT).exe
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Fourier (FFT).pdb
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Audio.DirectSound.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Audio.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Audition.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Controls.Audio.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Controls.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.MachineLearning.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Math.Core.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Math.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\Accord.Statistics.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\SharpDX.DirectSound.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\SharpDX.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\ZedGraph.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\de\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\es\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\fr\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\hu\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\it\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\ja\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\pt\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\ru\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\sk\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\sv\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\tr\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\zh-cn\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\bin\x86\Debug\zh-tw\ZedGraph.resources.dll
+E:\videostuff\KaloVision\fourier\sources\obj\x86\Debug\Fourier (FFT).csprojResolveAssemblyReference.cache
+E:\videostuff\KaloVision\fourier\sources\obj\x86\Debug\SampleApp.AboutBox.resources
+E:\videostuff\KaloVision\fourier\sources\obj\x86\Debug\SampleApp.MainForm.resources
+E:\videostuff\KaloVision\fourier\sources\obj\x86\Debug\Fourier (FFT).csproj.GenerateResource.Cache
+E:\videostuff\KaloVision\fourier\sources\obj\x86\Debug\Fourier (FFT).exe
+E:\videostuff\KaloVision\fourier\sources\obj\x86\Debug\Fourier (FFT).pdb

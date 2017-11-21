@@ -13,6 +13,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Features2D;
 using Emgu.CV.Util;
+using Accord.Math.Transforms;
 
 namespace KaloVision
 {
@@ -40,6 +41,10 @@ namespace KaloVision
         double maxang = 0.0;
 
         CircularBuffer angleHistory;
+        CircularBuffer avgXHistory;
+        CircularBuffer avgYHistory;
+
+        int historyLength = 128;
 
         public TestForm()
         {
@@ -53,7 +58,9 @@ namespace KaloVision
             //featureDetector = new ORBDetector(500);
             featureDetector = new Emgu.CV.Features2D.GFTTDetector(500);
 
-            angleHistory = new CircularBuffer(10);
+            angleHistory = new CircularBuffer(historyLength);
+            avgXHistory = new CircularBuffer(historyLength);
+            avgYHistory = new CircularBuffer(historyLength);
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
@@ -66,105 +73,131 @@ namespace KaloVision
                 return;
             }
 
-            double vmag = 0.0;
-            double vang = 0.0;
             double rho = 0.0;
             double theta_deg = 0.0;
 
+            perfSw.Restart();
+
             try
             {
+                
+
                 framesProcessed++;
+
+                //store last gray image, pull current image, convert to gray
                 lastGray = currentGray;
                 currentImage = capture.QueryFrame().ToImage<Bgr, Byte>();
-                perfSw.Restart();
+                
                 Image<Gray, byte> grayImage = new Image<Gray, byte>(currentImage.Size);
                 CvInvoke.CvtColor(currentImage, grayImage, ColorConversion.Bgr2Gray);
 
+                //apply gaussian blur to gray to smooth out noise
                 CvInvoke.GaussianBlur(grayImage, grayImage, new Size(15, 15), 1.8);
 
                 currentGray = grayImage;
 
-                //VisualizeDenseFlow_Means(ref vmag, ref vang);
-
+                //create variables to store optical flow in cart and polar coordinates
                 Image<Gray, float> flowX = new Image<Gray, float>(currentGray.Size);
                 Image<Gray, float> flowY = new Image<Gray, float>(currentGray.Size);
                 Image<Gray, float> mag = new Image<Gray, float>(currentGray.Size);
                 Image<Gray, float> ang = new Image<Gray, float>(currentGray.Size);
 
+                //image with all values set to 255
                 Image<Gray, byte> fullGray = new Image<Gray, byte>(currentImage.Size);
                 fullGray.SetValue(new Gray(255));
 
+
+                //wait until second frame to get flow
                 if (framesProcessed >= 2)
                 {
-                    int threshold = 3;
+                    int threshold = 2;
 
+                    //get flow images
                     CvInvoke.CalcOpticalFlowFarneback(lastGray, currentGray, flowX, flowY, 0.5, 3, 20, 3, 5, 1.2, OpticalflowFarnebackFlag.Default);
 
+                    //convert x and y flow to magnitude and angle images
                     CvInvoke.CartToPolar(flowX, flowY, mag, ang, true);
+
+                    //threshold the magnitude so we only look at vectors with motion
+                    CvInvoke.Threshold(mag, mag, threshold, 1.0, ThresholdType.Binary);
+
+                    //find the total number of pixels in the image that are over the threshold value
+                    MCvScalar sumMask = CvInvoke.Sum(mag);
+
+                    //apply the mask to the flow vectors
+                    flowX = flowX.Copy(mag.Convert<Gray, byte>());
+                    flowY = flowY.Copy(mag.Convert<Gray, byte>());
 
                     //sum of flow vector components
                     MCvScalar sumX = CvInvoke.Sum(flowX);
                     MCvScalar sumY = CvInvoke.Sum(flowY);
+
+                    //avg of flow vector components
+                    double avgX = sumX.V0 / sumMask.V0;
+                    double avgY = sumY.V0 / sumMask.V0;
+
                     //convert to polar radius (rho) and angle (theta)
-                    rho = Math.Sqrt(sumX.V0 * sumX.V0 + sumY.V0 * sumY.V0);
-                    double theta = Math.Atan2(sumY.V0, sumX.V0);
+                    rho = Math.Sqrt(avgX * avgX + avgY * avgY);
+                    double theta = Math.Atan2(avgY, avgX);
+
                     //convert angle from radians to degrees
                     theta_deg = theta * 180 / Math.PI;
 
-                    CvInvoke.Threshold(mag, mag, threshold, float.MaxValue, ThresholdType.ToZero);
-
+                    //clamp values to bytes for HSV image visualization
                     CvInvoke.Normalize(mag, mag, 0, 255, NormType.MinMax);
                     CvInvoke.Normalize(ang, ang, 0, 255, NormType.MinMax);
 
+                    //create hue/saturation/value image to visualize magnitude and angle of flow
                     Image<Hsv, byte> hsv = new Image<Hsv, byte>(new Image<Gray, byte>[] { ang.Convert<Gray, byte>(), fullGray, mag.Convert<Gray, byte>() });
 
-                    if (rho > 40000)
+                    //adding average flow components history
+                    avgXHistory.Add(avgX);
+                    avgYHistory.Add(avgY);
+
+                    double rho_avg = 0.0;
+                    double x_avg = 0.0;
+                    double y_avg = 0.0;
+
+                    int smoothLength = 3;
+
+                    //get average angle in the history
+                    if (avgXHistory.Count() > 0)
                     {
-                        angleHistory.Add(theta_deg);
-                    }
-                    else
-                    {
-                        if(angleHistory.Count() > 0)
-                        {
-                            angleHistory.Read();
-                        }
+                        x_avg = avgXHistory.Median(smoothLength);
+                        y_avg = avgYHistory.Median(smoothLength);
+                        rho_avg = Math.Sqrt(x_avg * x_avg + y_avg * y_avg);
                     }
 
-                    double theta_avg = 0.0;
-                    if(angleHistory.Count() > 0)
-                    {
-                        theta_avg = angleHistory.Avg();
-                    }
-                    
-                    double x_avg = Math.Cos(theta_avg * (Math.PI / 180.0));
-                    double y_avg = Math.Sin(theta_avg * (Math.PI / 180.0));
-
-                    double x = Math.Cos(theta_deg * (Math.PI / 180.0));
-                    double y = Math.Sin(theta_deg * (Math.PI / 180.0));
-
+                    //convert hsv to bgr image for bitmap conversion
                     CvInvoke.CvtColor(hsv, currentImage, ColorConversion.Hsv2Bgr);
 
-                    currentImage.Erode(5);
-                    currentImage.Dilate(5);
-
-                    if (rho > 40000)
+                    //draw instaneous average flow direction line if magnitude exceeds threshold
+                    if (rho > threshold)
                     {
-                        currentImage.Draw(new LineSegment2D(new Point(currentImage.Size.Width / 2, currentImage.Height / 2), new Point((int)(x * 100) + currentImage.Size.Width / 2, (int)(y * 100) + currentImage.Height / 2)), new Bgr(Color.Red), 2);
+                        currentImage.Draw(new LineSegment2D(new Point(currentImage.Size.Width / 2, currentImage.Height / 2), new Point((int)(avgX * 10) + currentImage.Size.Width / 2, (int)(avgY * 10) + currentImage.Height / 2)), new Bgr(Color.Red), 2);
                     }
 
-                    currentImage.Draw(new LineSegment2D(new Point(currentImage.Size.Width / 2, currentImage.Height / 2), new Point((int)(x_avg * 100) + currentImage.Size.Width / 2, (int)(y_avg * 100) + currentImage.Height / 2)), new Bgr(Color.Blue), 2);
-
+                    //draw historical average flow direction line
+                    if (rho_avg > threshold)
+                    {
+                        currentImage.Draw(new LineSegment2D(new Point(currentImage.Size.Width / 2, currentImage.Height / 2), new Point((int)(x_avg * 10) + currentImage.Size.Width / 2, (int)(y_avg * 10) + currentImage.Height / 2)), new Bgr(Color.Blue), 2);
+                    }
+                        
+                    //pull bitmap from image and draw to picture box
                     currentBitmap = currentImage.Bitmap;
                     videoPictureBox.Image = currentBitmap;
                 }
 
-                perfSw.Stop();
+                
             }
             catch (Exception exp)
             {
                 MessageBox.Show(exp.Message + " " + exp.StackTrace);
             }
-            statusLabel.Text = framesProcessed.ToString() + " totalms: " + fpsSw.ElapsedMilliseconds.ToString() + " fps: " + ((double)framesProcessed / fpsSw.Elapsed.TotalSeconds).ToString() + " perfms: " + perfSw.ElapsedMilliseconds + " vmag: " + rho + " vang: " + theta_deg + " minang: " + minang + " maxang: " + maxang;
+
+            perfSw.Stop();
+
+            statusLabel.Text = framesProcessed.ToString() + " totalms: " + fpsSw.ElapsedMilliseconds.ToString() + " fps: " + ((double)framesProcessed / fpsSw.Elapsed.TotalSeconds).ToString() + " perfms: " + perfSw.ElapsedMilliseconds + " vmag: " + rho + " vang: " + theta_deg;
         }
 
         private void VisualizeDenseFlow_Means(ref double vmag, ref double vang)
@@ -181,8 +214,6 @@ namespace KaloVision
             {
                 CvInvoke.CalcOpticalFlowFarneback(lastGray, currentGray, flowX, flowY, 0.5, 3, 50, 3, 5, 1.2, OpticalflowFarnebackFlag.Default);
                 CvInvoke.CartToPolar(flowX, flowY, mag, ang, true);
-
-                //CvInvoke.MinMaxIdx(ang, out minang, out maxang, new int[] { }, new int[] { });
 
                 CvInvoke.Threshold(mag, mag, 4, float.MaxValue, ThresholdType.ToZero);
 

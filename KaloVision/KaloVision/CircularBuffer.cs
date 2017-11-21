@@ -42,6 +42,21 @@ namespace KaloVision
             return _queue.Average();
         }
 
+        public double Avg(int size)
+        {
+            return _queue.Reverse().Take(size).Average();
+        }
+
+        public double Median(int size)
+        {
+            if (_queue.Count-1 < (size / 2))
+            {
+                return 0.0;
+            }
+
+            return _queue.Reverse().Take(size).OrderBy(n => n).ElementAt(size / 2);
+        }
+
         public int Count()
         {
             return _queue.Count;
