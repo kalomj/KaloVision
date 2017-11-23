@@ -19,47 +19,77 @@ namespace KaloVision
 
         public void Add(double obj)
         {
-            if (_queue.Count == _size)
+            lock(_queue)
             {
-                _queue.Dequeue();
-                _queue.Enqueue(obj);
+                if (_queue.Count == _size)
+                {
+                    _queue.Dequeue();
+                    _queue.Enqueue(obj);
+                }
+                else
+                    _queue.Enqueue(obj);
             }
-            else
-                _queue.Enqueue(obj);
+
         }
         public double Read()
         {
-            return _queue.Dequeue();
+            lock (_queue)
+            {
+                return _queue.Dequeue();
+            }
         }
 
         public double Peek()
         {
-            return _queue.Peek();
+            lock (_queue)
+            {
+                return _queue.Peek();
+            }
         }
 
         public double Avg()
         {
-            return _queue.Average();
+            lock (_queue)
+            {
+                return _queue.Average();
+            }
         }
 
         public double Avg(int size)
         {
-            return _queue.Reverse().Take(size).Average();
+            lock (_queue)
+            {
+                return _queue.Reverse().Take(size).Average();
+            }
         }
 
         public double Median(int size)
         {
-            if (_queue.Count-1 < (size / 2))
+            lock (_queue)
             {
-                return 0.0;
-            }
+                if (_queue.Count - 1 < (size / 2))
+                {
+                    return 0.0;
+                }
 
-            return _queue.Reverse().Take(size).OrderBy(n => n).ElementAt(size / 2);
+                return _queue.Reverse().Take(size).OrderBy(n => n).ElementAt(size / 2);
+            }
         }
 
         public int Count()
         {
-            return _queue.Count;
+            lock (_queue)
+            {
+                return _queue.Count;
+            }
+        }
+
+        public double[] ToArray()
+        {
+            lock(_queue)
+            {
+                return _queue.ToArray();
+            }
         }
     }
 }

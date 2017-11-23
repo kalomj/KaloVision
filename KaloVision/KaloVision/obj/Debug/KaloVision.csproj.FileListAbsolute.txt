@@ -21,16 +21,10 @@ E:\videostuff\KaloVision\KaloVision\KaloVision\obj\Debug\KaloVision.pdb
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.dll.config
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.dll
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.xml
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Controls.dll
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.MachineLearning.dll
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Math.Core.dll
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Math.dll
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Statistics.dll
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Controls.xml
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.MachineLearning.xml
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Math.xml
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Math.Core.xml
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Statistics.xml
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\ZedGraph.xml
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\de\ZedGraph.resources.dll
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\es\ZedGraph.resources.dll
@@ -45,7 +39,5 @@ E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\sv\ZedGraph.resources.d
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\tr\ZedGraph.resources.dll
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\zh-cn\ZedGraph.resources.dll
 E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\zh-tw\ZedGraph.resources.dll
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Audio.dll
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Controls.Audio.dll
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Audio.xml
-E:\videostuff\KaloVision\KaloVision\KaloVision\bin\Debug\Accord.Controls.Audio.xml
+E:\videostuff\KaloVision\KaloVision\KaloVision\obj\Debug\KaloVision.csprojResolveAssemblyReference.cache
+E:\videostuff\KaloVision\KaloVision\KaloVision\obj\Debug\KaloVision.faForm.resources

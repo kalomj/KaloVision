@@ -36,6 +36,8 @@
             this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.trackBar3 = new System.Windows.Forms.TrackBar();
             this.trackBar4 = new System.Windows.Forms.TrackBar();
+            this.faxButton = new System.Windows.Forms.Button();
+            this.fayButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.videoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
@@ -45,7 +47,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(13, 42);
+            this.startButton.Location = new System.Drawing.Point(16, 12);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 0;
@@ -60,14 +62,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.videoPictureBox.Location = new System.Drawing.Point(13, 113);
             this.videoPictureBox.Name = "videoPictureBox";
-            this.videoPictureBox.Size = new System.Drawing.Size(701, 662);
+            this.videoPictureBox.Size = new System.Drawing.Size(949, 625);
             this.videoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.videoPictureBox.TabIndex = 1;
             this.videoPictureBox.TabStop = false;
             // 
             // stopButton
             // 
-            this.stopButton.Location = new System.Drawing.Point(95, 41);
+            this.stopButton.Location = new System.Drawing.Point(97, 12);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 2;
@@ -79,7 +81,7 @@
             // 
             this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(13, 782);
+            this.statusLabel.Location = new System.Drawing.Point(13, 745);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(37, 13);
             this.statusLabel.TabIndex = 3;
@@ -123,11 +125,33 @@
             this.trackBar4.Size = new System.Drawing.Size(104, 45);
             this.trackBar4.TabIndex = 7;
             // 
+            // faxButton
+            // 
+            this.faxButton.Location = new System.Drawing.Point(16, 41);
+            this.faxButton.Name = "faxButton";
+            this.faxButton.Size = new System.Drawing.Size(112, 23);
+            this.faxButton.TabIndex = 8;
+            this.faxButton.Text = "Fourier Analysis X";
+            this.faxButton.UseVisualStyleBackColor = true;
+            this.faxButton.Click += new System.EventHandler(this.faxButton_Click);
+            // 
+            // fayButton
+            // 
+            this.fayButton.Location = new System.Drawing.Point(16, 70);
+            this.fayButton.Name = "fayButton";
+            this.fayButton.Size = new System.Drawing.Size(112, 23);
+            this.fayButton.TabIndex = 8;
+            this.fayButton.Text = "Fourier Analysis Y";
+            this.fayButton.UseVisualStyleBackColor = true;
+            this.fayButton.Click += new System.EventHandler(this.fayButton_Click);
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1215, 802);
+            this.ClientSize = new System.Drawing.Size(983, 765);
+            this.Controls.Add(this.fayButton);
+            this.Controls.Add(this.faxButton);
             this.Controls.Add(this.trackBar4);
             this.Controls.Add(this.trackBar3);
             this.Controls.Add(this.trackBar2);
@@ -158,6 +182,8 @@
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.TrackBar trackBar3;
         private System.Windows.Forms.TrackBar trackBar4;
+        private System.Windows.Forms.Button faxButton;
+        private System.Windows.Forms.Button fayButton;
     }
 }
 

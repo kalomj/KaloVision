@@ -30,6 +30,7 @@ namespace KaloVision
         long framesProcessed = 0;
         Feature2D featureDetector;
         MKeyPoint[] keyPoints;
+        double fps;
 
         VectorOfPointF kpVector;
         VectorOfPointF nextVector;
@@ -132,9 +133,15 @@ namespace KaloVision
                     MCvScalar sumX = CvInvoke.Sum(flowX);
                     MCvScalar sumY = CvInvoke.Sum(flowY);
 
+                    double avgX = 0.0;
+                    double avgY = 0.0;
+
                     //avg of flow vector components
-                    double avgX = sumX.V0 / sumMask.V0;
-                    double avgY = sumY.V0 / sumMask.V0;
+                    if(sumMask.V0 > 0.0)
+                    {
+                        avgX = sumX.V0 / sumMask.V0;
+                        avgY = sumY.V0 / sumMask.V0;
+                    }
 
                     //convert to polar radius (rho) and angle (theta)
                     rho = Math.Sqrt(avgX * avgX + avgY * avgY);
@@ -196,7 +203,7 @@ namespace KaloVision
             }
 
             perfSw.Stop();
-
+            fps = ((double)framesProcessed / fpsSw.Elapsed.TotalSeconds);
             statusLabel.Text = framesProcessed.ToString() + " totalms: " + fpsSw.ElapsedMilliseconds.ToString() + " fps: " + ((double)framesProcessed / fpsSw.Elapsed.TotalSeconds).ToString() + " perfms: " + perfSw.ElapsedMilliseconds + " vmag: " + rho + " vang: " + theta_deg;
         }
 
@@ -326,6 +333,16 @@ namespace KaloVision
             }
 
             return vf;
+        }
+
+        private void fayButton_Click(object sender, EventArgs e)
+        {
+            new faForm(avgYHistory,fps).Show();
+        }
+
+        private void faxButton_Click(object sender, EventArgs e)
+        {
+            new faForm(avgXHistory,fps).Show();
         }
     }
 }
